@@ -11,10 +11,12 @@ import {createStackNavigator} from "react-navigation";
 import TabPage from "./pages/TabPage";
 
 const App = createStackNavigator({
-    Tab:{
-        screen:TabPage
+    Tab: {
+        screen: TabPage
     }
 
+}, {
+    tabBarPosition:"bottom"
 });
 
 export default App;

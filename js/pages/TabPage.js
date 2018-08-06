@@ -1,7 +1,7 @@
-import FirstPage from "./FirstPage";
-import SecondPage from "./SecondPage";
-import ThirdPage from "./ThirdPage";
-import ForthPage from "./ForthPage";
+import FirstPage from "./HomePage";
+import SecondPage from "./ClassfyPage";
+import ThirdPage from "./ChartPage";
+import ForthPage from "./SettingPage";
 import {Dimensions} from "react-native";
 import color from "../style/ColorStyle";
 import {createBottomTabNavigator} from "react-navigation";
@@ -21,6 +21,21 @@ export default Tab = createBottomTabNavigator({
         screen: ForthPage
     }
 }, {
+    navigationOptions: ({navigation}) => ({
+        tabBarIcon: ({focused, tintColor}) => {
+            const {routeName} = navigation.state;
+            let iconName;
+            if (routeName === 'First') {
+                iconName = `ios-home${focused ? '' : '-outline'}`;
+            } else if (routeName === 'Second') {
+                iconName = `ios-options${focused ? '' : '-outline'}`;
+            }
+
+            // 在此处可以返回任何组件！
+            // 我们通常使用react-native-vector-icons中的图标组件
+            return <Ionicons name={iconName} size={25} color={tintColor}/>;
+        },
+    }),
     tabBarOptions: {
         activeTintColor: color.primary,
         inactiveTintColor: color.gray,
