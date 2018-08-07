@@ -1,3 +1,8 @@
+
+
+
+
+
 export default {
     primary: '#1E90FF',  //主题样式 选中底部标题和图片的颜色以及顶部标题
     border: '#e0e0e0',

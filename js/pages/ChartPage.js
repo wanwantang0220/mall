@@ -20,7 +20,6 @@ export default class ChartPage extends Component {
                 : require('../images/icon_shop_cart.png');
             return <Image source={icon} style={{height: 22, width: 22}}/>;
         },
-        headerTintColor: color.activeBarText,
     };
 
     componentWillUpdate() {

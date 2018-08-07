@@ -1,6 +1,7 @@
 import * as util from "../util/Tool";
 import * as md5 from "../util/MD5";
 import JsonUtil from "./JsonUtil";
+import {ErrorAnayle, NetWork_Request_Error} from "./ErrorAnayle";
 
 
 const API_SECRET_KEY = 'www.mall.cycle.com';
@@ -9,32 +10,26 @@ const SIGN = md5.hex_md5((TIMESTAMP + API_SECRET_KEY).toLowerCase());
 
 const httpRequest = async (params = {}, url) => {
     let data = params.query || {};
-    // data.sign = SIGN;
-    // data.time = TIMESTAMP;
+
     let header = {
         method: params.method || 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JsonUtil.jsonToStr(data)
+        data: data,
     };
-    let res = await new Promise((resolve, reject) => {
-        fetch(url, header)
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log('response', responseData);
-                resolve(responseData);
-            })
-            .catch((error) => {
-                console.log(ErrorAnayle.getErrorBean(NetWork_Request_Error));
-            })
-            .done();
-    })
-    return res;
+
+    try {
+        return await fetch(url, header);
+    } catch (error) {
+        console.error('error : ', error);
+    }
+
+
 };
 
 
 module.exports = {
     httpRequest
-}
+};
