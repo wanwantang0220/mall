@@ -66,6 +66,7 @@ export default class HomePage extends Component {
     };
 
     async componentDidMount() {
+
         const res = await httpUrl.getLatest({
             query: {}
         });
