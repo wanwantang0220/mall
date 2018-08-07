@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import {Dimensions, Image, StyleSheet, View, Text} from "react-native";
+import color from "../style/ColorStyle";
 
 
 export default class ChartPage extends Component {
@@ -19,6 +20,7 @@ export default class ChartPage extends Component {
                 : require('../images/icon_shop_cart.png');
             return <Image source={icon} style={{height: 22, width: 22}}/>;
         },
+        headerTintColor: color.activeBarText,
     };
 
     componentWillUpdate() {

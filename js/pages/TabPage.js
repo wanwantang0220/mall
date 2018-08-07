@@ -12,43 +12,15 @@ import SettingPage from "./SettingPage";
 const Tab = createBottomTabNavigator({
     Home: {
         screen: HomePage,
-        navigationOptions: {
-            tabBarIcon: ({focused}) => {
-                // 根据是否选中，显示不同图片
-                const icon = focused
-                    ? require('../images/icon_home_active.png')
-                    : require('../images/icon_home.png');
-                return <Image source={icon} style={{height: 22, width: 22}}/>;
-            },
-            headerTitleStyle: {
-                flex: 1,
-                width:Dimensions.get('window').width,
-                textAlign: "center",
-                alignSelf: 'center'
-            },
-            headerRight: <View/>,
-            headerLeft: (<View/>),
-            headerBackTitle: null,
-        }
-
     },
     Classfy: {
         screen: ClassfyPage,
-        navigationOptions: {
-            tabBarIcon: ({focused}) => {
-                // 根据是否选中，显示不同图片
-                const icon = focused
-                    ? require('../images/icon_classify_active.png')
-                    : require('../images/icon_classify.png');
-                return <Image source={icon} style={{height: 22, width: 22}}/>;
-            },
-        }
     },
     Chart: {
         screen: ChartPage,
     },
     Setting: {
-        screen: SettingPage
+        screen: SettingPage,
     }
 }, {
     // navigationOptions: ({navigation}) => ({
@@ -91,22 +63,51 @@ const Tab = createBottomTabNavigator({
             height: 50
         }
     },
-    navigationOptions: ({navigation}) => ({
-        // title: navigation.state.routeName,
-        headerStyle: {backgroundColor: '#fff',},
-        headerTintColor: color.activeBarText,
-        headerTitleStyle: {fontWeight: 'bold',},
-    }),
+    // navigationOptions: ({navigation}) => ({
+    //     title: navigation.state.routeName,
+    //     titleColor:color.activeBarText,
+    //     headerStyle: {backgroundColor: '#000000',},
+    //     headerTintColor: color.activeBarText,
+    //     headerTitleStyle: {fontWeight: 'bold',},
+    //     header: {  // 导航栏相关设置项
+    //         backTitle: '返回',  // 左上角返回键文字
+    //         style: {
+    //             backgroundColor: '#fff'
+    //         },
+    //         titleStyle: {
+    //             color: 'green'
+    //         }
+    //     },
+    //     cardStack: {
+    //         gesturesEnabled: false  // 是否可以右滑返回
+    //     }
+    // }),
     // mode: 'card',
 });
-
+//
 Tab.navigationOptions = ({navigation}) => {
-    let {routeName} = navigation.state.routes[navigation.state.index];
-// You can do whatever you like here to pick the title based on the route name
-    let headerTitle = routeName;
-    return {
-        headerTitle,
-    };
+    // let {routeName} = navigation.state.routes[navigation.state.index];
+    //
+    // console.log(routeName);
+    // let headerTitle;
+    // if (routeName == 'Home') {
+    //     headerTitle = '首页';
+    // } else if (routeName == 'Classfy') {
+    //     headerTitle = '分类';
+    // } else if (routeName == 'Chart') {
+    //     headerTitle = '购物车'
+    // } else if (routeName == 'Setting') {
+    //     headerTitle = '设置';
+    // }
+    //
+    // return {
+    //     headerTitle,
+    // };
+
+    return{
+        header: null,
+    }
+
 };
 
 export default Tab;
