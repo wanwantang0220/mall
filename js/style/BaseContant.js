@@ -27,25 +27,25 @@ const Base = {
 }
 const Cate_Data = [
     {
-        title: 'Top250',
+        title: '热门',
         url: '',
         colors: ['#fe4080', "#ff77a5"],
         icon: require('../images/icon_top250.png'),
         index: 0,
     }, {
-        title: '口碑榜',
+        title: '最新',
         url: '',
         colors: ['#feaa1a', "#ffd31a"],
         icon: require('../images/icon_praise.png'),
         index: 1,
     }, {
-        title: '北美票房榜',
+        title: '主题',
         url: '',
         colors: ['#b983ff', "#a35cff"],
         icon: require('../images/icon_north.png'),
         index: 2,
     }, {
-        title: '新片榜',
+        title: '栏目',
         url: '',
         colors: ['#00ceff', "#0196fe"],
         icon: require('../images/icon_newlast.png'),

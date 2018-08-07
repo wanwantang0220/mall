@@ -15,7 +15,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {Cate_Data} from "../style/BaseContant";
 
 const {width, height} = Dimensions.get('window');
-const itemHight = 200;
+const itemHight = 150;
 const moviesCount = 20;
 
 
@@ -54,6 +54,7 @@ export default class HomePage extends Component {
         super(props);
         this.state = {
             hotMovies: [],
+            totalMovies: [],
             refreshing: true,
             isInit: false,
             MainColor: MainColor,
@@ -71,9 +72,10 @@ export default class HomePage extends Component {
         let info = await res.json();
         console.log('info : ', info);
 
-        if (info != null && info.top_stories != null && info.top_stories.length > 0) {
+        if (info != null && info.top_stories != null && info.stories != null) {
             this.setState({
                 hotMovies: info.top_stories,
+                totalMovies: info.stories,
                 refreshing: false,
                 isInit: true,
             });
@@ -152,16 +154,16 @@ export default class HomePage extends Component {
                     </View>
                     {/*列表*/}
                     <View style={styles.flat_view}>
-                        {/*<FlatList*/}
-                        {/*data={this.getHotMovieDatas(false)}*/}
-                        {/*keyExtractor={(item, index) => index.toString()}*/}
-                        {/*renderItem={*/}
-                        {/*({item}) => this.renderItemView(item)*/}
-                        {/*}*/}
-                        {/*getItemLayout={(data, index) => this.getItemLayout(data, index)}*/}
-                        {/*showsVerticalScrollIndicator={false}*/}
-                        {/*numColumns={3}*/}
-                        {/*/>*/}
+                        <FlatList
+                            data={this.getHotMovies()}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={
+                                ({item}) => this.renderItemView(item)
+                            }
+                            getItemLayout={(data, index) => this.getItemLayout(data, index)}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={3}
+                        />
                     </View>
 
                 </View>
@@ -182,9 +184,10 @@ export default class HomePage extends Component {
             return items.map((item, i) => {
                 return (
                     <TouchableOpacity
+                        activeOpacity={0.8}
                         key={i}
                         onPress={() => {
-                            jumpPager(this.props.navigation.navigate, 'MovieDetail', item.id)
+                            jumpPager(this.props.navigation.navigate, 'NewDetail', item.id)
                         }}>
                         <View
                             style={[styles.swiper_children_view, {backgroundColor: this.state.MainColor}]}>
@@ -245,6 +248,40 @@ export default class HomePage extends Component {
         });
     }
 
+
+    /***
+     * 列表item
+     */
+    renderItemView(item) {
+        return (
+            <View style={styles.flat_item}>
+                <TouchableView
+                    style={styles.flat_item_touchableview}
+                    onPress={() => {
+                        jumpPager(this.props.navigation.navigate, 'MovieDetail', item.id)
+                    }}>
+                    <View style={[styles.flat_item_view, {backgroundColor: this.state.MainColor}]}>
+                        <Image
+                            source={{uri: item.images[0]}}
+                            style={styles.flat_item_image}
+                            mode={Image.resizeMode.contain}/>
+                        <View style={[styles.flat_item_detail, {backgroundColor: this.state.MainColor}]}>
+                            <Text style={styles.flat_item_title}
+                                  numberOfLines={1}>
+                                {item.title}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableView>
+            </View>
+        )
+    }
+
+    getItemLayout(data, index) {
+        return {length: itemHight, offset: itemHight * index, index}
+    }
+
+
     getHotMovieDatas(isBanner) {
         let items = [];
         let movieDatas = this.state.hotMovies;
@@ -257,6 +294,21 @@ export default class HomePage extends Component {
                 for (let i = 4; i < movieDatas.length; i++) {
                     items.push(movieDatas[i]);
                 }
+            }
+        }
+        return items;
+    }
+
+    /**
+     * 列表
+     * @returns {Array}
+     */
+    getHotMovies() {
+        let items = [];
+        let movieDatas = this.state.totalMovies;
+        if (movieDatas != null && movieDatas.length > 4) {
+            for (let i = 0; i < movieDatas.length; i++) {
+                items.push(movieDatas[i]);
             }
         }
         return items;

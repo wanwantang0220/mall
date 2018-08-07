@@ -9,10 +9,14 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from "react-navigation";
 import TabPage from "./pages/TabPage";
+import NewDetailPage from "./pages/NewDetailPage";
 
 const App = createStackNavigator({
     Tab: {
         screen: TabPage
+    },
+    NewDetail: {
+        screen: NewDetailPage
     }
 
 }, {
