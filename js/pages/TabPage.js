@@ -7,7 +7,6 @@ import HomePage from "./HomePage";
 import ClassfyPage from "./ClassfyPage";
 import ChartPage from "./ChartPage";
 import SettingPage from "./SettingPage";
-import TabHomePage from "./TabHomePage";
 
 
 const Tab = createBottomTabNavigator({
