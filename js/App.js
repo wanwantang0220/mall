@@ -11,6 +11,8 @@ import {createStackNavigator} from "react-navigation";
 import TabPage from "./pages/TabPage";
 import NewDetailPage from "./pages/NewDetailPage";
 import CommentLongPage from "./pages/CommentLongPage";
+import SearchPage from "./pages/SearchPage";
+import ThemesPage from "./pages/ThemesPage";
 
 const App = createStackNavigator({
     Tab: {
@@ -19,12 +21,18 @@ const App = createStackNavigator({
     NewDetail: {
         screen: NewDetailPage
     },
-    CommentLong:{
-        screen:CommentLongPage
+    CommentLong: {
+        screen: CommentLongPage
+    },
+    Search: {
+        screen: SearchPage
+    },
+    Themes: {
+        screen: ThemesPage
     }
 
 }, {
-    tabBarPosition:"bottom"
+    tabBarPosition: "bottom"
 });
 
 export default App;

@@ -226,7 +226,7 @@ export default class HomePage extends Component {
                     key={i}
                     style={styles.cate_children_touchview}
                     onPress={() => {
-                        jumpPager(this.props.navigation.navigate, 'MovieList', {
+                        jumpPager(this.props.navigation.navigate, 'Themes', {
                             index: item.index,
                             title: item.title
                         })
@@ -259,7 +259,7 @@ export default class HomePage extends Component {
                 <TouchableView
                     style={styles.flat_item_touchableview}
                     onPress={() => {
-                        jumpPager(this.props.navigation.navigate, 'MovieDetail', item.id)
+                        jumpPager(this.props.navigation.navigate, 'NewDetail', item.id)
                     }}>
                     <View style={[styles.flat_item_view, {backgroundColor: this.state.MainColor}]}>
                         <Image

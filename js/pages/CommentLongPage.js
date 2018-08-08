@@ -15,6 +15,7 @@ import NaviBarView from "../component/NaviBarView";
 import httpUrl from "../http/HttpUrl";
 import {getTime} from "../util/TimeUtil";
 import {checkNullObj} from "../util/Tool";
+import {show} from "../util/ToastUtils";
 
 const {width, height} = Dimensions.get('window');
 
@@ -32,6 +33,7 @@ export default class CommentLongPage extends PureComponent {
             extraInfo: {},
             MainColor: MainColor,
             ToolColor: ToolColor,
+            IsLoadingComment: false,
         };
     }
 
@@ -147,6 +149,8 @@ export default class CommentLongPage extends PureComponent {
                                 renderItem={({item}) => (this.renderItemView(item))}
                                 showsVerticalScrollIndicator={false}/>
                         </View>
+                        {/*加载更多*/}
+                        <View style={styles.commentary_item_loadmore_view}>{this.getCommentaryItemLoadView()}</View>
                     </ScrollView>
                 </View>
             )
@@ -207,6 +211,64 @@ export default class CommentLongPage extends PureComponent {
         )
     }
 
+
+    /***
+     * 加载更多
+     * @returns {*}
+     */
+    getCommentaryItemLoadView() {
+        if (this.state.IsLoadingComment) {
+            return (
+                <TouchableOpacity onPress={() => {
+                    show("加载中,请稍等")
+                }}>
+                    <View style={{flexDirection: 'row'}}>
+                        <ActivityIndicator
+                            style={{marginRight: 6}}
+                            animating={true}
+                            color={this.state.MainColor}/>
+                        <Text style={[styles.commentary_item_loadmore_text, {color: this.state.MainColor}]}>
+                            加载中...
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        } else {
+            return (
+                <TouchableOpacity onPress={() => {
+                    if (this.state.IsLoadingComment) {
+                        show('已加载中,请稍等')
+                    } else {
+                        this.setState({
+                            IsLoadingComment: true,
+                        });
+                        this.requestCommonary()
+                    }
+                }}>
+                    <Text style={[styles.commentary_item_loadmore_text, {color: this.state.MainColor}]}>
+                        加载更多评论
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+
+
+    }
+
+
+     requestCommonary() {
+        var sleep = function (time) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve();
+                }, time);
+            })
+        };
+        sleep(3000);
+        this.setState({
+            IsLoadingComment: false,
+        })
+    }
 }
 
 
@@ -301,7 +363,7 @@ const styles = {
         alignItems: 'center',
     },
     commentary_item_loadmore_text: {
-        fontSize: 16,
+        fontSize: 12,
     },
     commentary_item_view: {
         flexDirection: 'column',
