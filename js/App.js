@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {createStackNavigator} from "react-navigation";
 import TabPage from "./pages/TabPage";
 import NewDetailPage from "./pages/NewDetailPage";
+import CommentLongPage from "./pages/CommentLongPage";
 
 const App = createStackNavigator({
     Tab: {
@@ -17,6 +18,9 @@ const App = createStackNavigator({
     },
     NewDetail: {
         screen: NewDetailPage
+    },
+    CommentLong:{
+        screen:CommentLongPage
     }
 
 }, {

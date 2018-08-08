@@ -94,7 +94,6 @@ class ParallaxScrollView extends Component {
                     position: 'absolute',
                     zIndex: 1,
                     // paddingTop: 20,
-                    marginTop:20,
                     backgroundColor: scrollY.interpolate({
                         //inputRange: [-windowHeight, windowHeight * DEFAULT_WINDOW_MULTIPLIER, windowHeight * 0.8],
                         inputRange: [0 ,windowHeight-DEFAULT_NAVBAR_HEIGHT,windowHeight],

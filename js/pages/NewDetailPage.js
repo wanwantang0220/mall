@@ -4,10 +4,16 @@ import {
     View, StyleSheet
 } from "react-native";
 import {Default_Photos} from "../style/BaseContant";
-import {GrayBlackColor, GrayColor, GrayWhiteColor, MainBg, MainColor, White, WhiteTextColor} from "../style/BaseStyle";
+import {
+    BackgroundColorLight,
+    BaseStyles, BlackTextColor, GrayBlackColor, GrayColor, GrayWhiteColor, MainBg, MainColor, White,
+    WhiteTextColor
+} from "../style/BaseStyle";
 import LinearGradient from "react-native-linear-gradient";
-import {DEFAULT_NAVBAR_HEIGHT} from "../component/ParallaxScrollView";
+import {DEFAULT_NAVBAR_HEIGHT, ParallaxScrollView} from "../component/ParallaxScrollView";
 import httpUrl from "../http/HttpUrl";
+import {getTime} from "../util/TimeUtil";
+import {jumpPager} from "../util/Utils";
 
 const {width, height} = Dimensions.get('window');
 const Header_Height = (height - DEFAULT_NAVBAR_HEIGHT) / 2;
@@ -34,8 +40,36 @@ export default class NewDetailPage extends PureComponent {
     }
 
 
-    componentDidMount() {
-        this.requestData();
+    async componentDidMount() {
+
+        const id = this.props.navigation.state.params.data;
+        console.log('id : ', id);
+        const datas = await httpUrl.getNewDL({
+            id: id
+        });
+
+        const commentdatas = await  httpUrl.getShortComments({
+            id: id
+        });
+        let info = await datas.json();
+        let commentinfo = await  commentdatas.json();
+        if (info != null) {
+            this.setState({
+                movieData: info,
+                isInitSuccess: true
+            })
+        } else {
+            this.setState({isInitSuccess: false})
+        }
+        if (commentinfo != null) {
+            this.setState({
+                commentaryDatas: commentinfo,
+                isInitSuccess: true
+            })
+        } else {
+            this.setState({isInitSuccess: false})
+        }
+
     }
 
     render() {
@@ -53,7 +87,6 @@ export default class NewDetailPage extends PureComponent {
                     <LinearGradient style={styles.loading_view} colors={[this.state.MainColor, WhiteTextColor]}>
                         <TouchableOpacity onPress={() => {
                             this.setState({isInitSuccess: true});
-                            this.requestData();
                         }}>
                             <Text style={[styles.reload_view, {
                                 color: this.state.MainColor,
@@ -64,30 +97,174 @@ export default class NewDetailPage extends PureComponent {
             )
         } else {
             return (
-                <Text>heelo</Text>
+                <ParallaxScrollView
+                    windowHeight={Header_Height}
+                    navBarTitle={this.state.movieData.title}
+                    navBarColor={this.state.MainColor}
+                    navBarTitleColor={WhiteTextColor}
+                    leftView={this.getParallaxLeftView()}
+                    rightView={<View/>}
+                    headerView={this.getParallaxHeaderView()}>
+                    {/*状态栏*/}
+                    <StatusBar
+                        animated={true}
+                        backgroundColor={this.state.MainColor}
+                        barStyle='light-content'/>
+                    <ScrollView style={styles.container}>
+                        {/*评分等介绍*/}
+                        <View style={styles.intro}>
+                            <View style={styles.intro_one}>
+                                <View style={styles.intro_one_left}>
+                                    <Text style={styles.intro_one_left_top_title}
+                                          numberOfLines={1}>
+                                        {this.state.movieData.title}
+                                    </Text>
+                                    <Text style={styles.intro_one_left_bottom_text}
+                                          numberOfLines={1}>
+                                        {this.state.movieData.image_source}
+                                    </Text>
+                                </View>
+
+                            </View>
+                        </View>
+                        {/*展片*/}
+                        <View style={styles.filemaker}>
+                            <Text style={styles.filemaker_text}>展片</Text>
+                            <FlatList
+                                data={this.state.movieData.images}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({item}) => (this.getFileMakerItemView(item))}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            />
+                        </View>
+                        {/*评论*/}
+                        <View style={styles.commentary}>
+                            <View style={styles.commentary_descr_view}>
+                                <Text style={styles.commentary_descr_text}>评论区</Text>
+                            </View>
+                            <View style={styles.commentary_flatlist_view}>
+                                <FlatList
+                                    data={this.state.commentaryDatas.comments}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={({item}) => (this.getCommentaryItemView(item))}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            </View>
+                        </View>
+                    </ScrollView>
+                </ParallaxScrollView>
+
             )
         }
     }
 
 
+    /***
+     * 标题左侧
+     * @returns {*}
+     */
+    getParallaxLeftView() {
+        return (<TouchableOpacity
+            onPress={() => {
+                this.props.navigation.goBack()
+            }}>
+            <Image
+                style={BaseStyles.baseIcon}
+                source={require('../images/icon_back.png')}/>
+        </TouchableOpacity>)
+    }
+
+    /***
+     *  标题
+     */
+    getParallaxHeaderView() {
+        return (
+            <LinearGradient
+                colors={[this.state.MainColor, WhiteTextColor]}
+                style={[styles.header_view, {backgroundColor: this.state.MainColor}]}>
+                <View style={styles.header_image_view}>
+                    <Image
+                        style={styles.header_image}
+                        source={{uri: this.state.movieData.image}}
+                    />
+                </View>
+            </LinearGradient>
+        )
+    }
+
+
+    /***
+     * 图片
+     * @param item
+     * @returns {*}
+     */
+    getFileMakerItemView(item) {
+        return (
+            <View style={styles.filemiker_View}>
+                <Image
+                    source={{uri: item}}
+                    style={styles.filemiker_view_image}/>
+                <Text style={styles.filemiker_view_name} numberOfLines={1}>
+                    图片
+                </Text>
+            </View>
+        )
+    }
+
+
+    /***
+     * 评论
+     */
+    getCommentaryItemView(item) {
+        return (
+            <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                    jumpPager(this.props.navigation.navigate,'CommentLong',null);
+                }}
+                style={styles.commentary_item_view}>
+                <Image
+                    source={{uri: item.avatar}}
+                    style={[styles.commentary_item_auther_img, {borderColor: this.state.MainColor}]}
+                />
+                <View>
+                    <View style={styles.commentary_item_view_top}>
+                        <View style={styles.commentary_item_view_top_left}>
+                            <Text style={styles.commentary_item_view_top_name} numberOfLines={1}>
+                                {item.author}
+                            </Text>
+
+                        </View>
+                        <View style={styles.commentary_item_view_top_right}>
+                            <Image
+                                source={require('../images/icon_zan.png')}
+                                style={styles.commentary_item_view_top_right_img}
+                                tintColor={this.state.MainColor}
+                            />
+                            <Text style={styles.commentary_item_view_top_right_num}>{item.likes}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.commentary_item_view_mid}>
+                        <Text
+                            numberOfLines={6}
+                            style={styles.commentary_item_view_comment}
+                        >{item.content}</Text>
+                        <Text style={styles.commentary_item_view_time} numberOfLines={1}>{getTime(item.time)}</Text>
+                    </View>
+                    <View style={{height: 0.5, width: width, backgroundColor: BackgroundColorLight, marginTop: 5}}/>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     async requestData() {
-        const id = this.props.navigation.state.params.data;
-
-        const datas = await httpUrl.getLatest({
-            query: {
-                id: id
-            }
-        });
-        let info = await datas.json();
-        console.log('datas : ', datas.json());
-        //TODO 数据处理
-
 
     }
 }
 
 
-const styles = StyleSheet.create({
+const styles = {
     loading_view: {
         flex: 1,
         width: width,
@@ -112,7 +289,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: MainBg,
-        marginTop: 20
     },
     header_view: {
         width: width,
@@ -189,7 +365,6 @@ const styles = StyleSheet.create({
         borderColor: '#ffcc33',
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 20,
         borderWidth: 1,
         borderRadius: 4,
     },
@@ -224,26 +399,26 @@ const styles = StyleSheet.create({
         backgroundColor: MainBg
     },
     filemaker: {
-        height: 216,
+        height: 160,
         flex: 1,
-        padding: 16,
-        paddingTop: 0,
+        padding: 10
     },
     filemaker_text: {
         fontSize: 14,
         color: GrayColor,
         marginBottom: 6,
+        marginTop: 10
     },
     filemiker_View: {
-        height: 186,
+        height: 120,
         width: (width - 32) / 4,
         justifyContent: 'center',
         alignItems: 'center',
     },
     filemiker_view_image: {
         width: (width - 32) * 0.24,
-        height: 140,
-        borderRadius: 2,
+        height: 100,
+        borderRadius: 5,
     },
     filemiker_view_name: {
         fontSize: 14,
@@ -314,8 +489,8 @@ const styles = StyleSheet.create({
     commentary_flatlist_view: {
         flex: 1,
         width: width,
-        paddingLeft: 16,
-        paddingRight: 16,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     commentary_item_loadmore_view: {
         width: width,
@@ -328,8 +503,9 @@ const styles = StyleSheet.create({
     },
     commentary_item_view: {
         flexDirection: 'row',
-        marginTop: 15,
-        marginBottom: 15,
+        marginTop: 6,
+        marginBottom: 6,
+
     },
     commentary_item_auther_img: {
         width: 36,
@@ -346,7 +522,7 @@ const styles = StyleSheet.create({
     commentary_item_view_top_left: {
         flexDirection: 'row',
         alignItems: 'center',
-        flex: 1,
+        flex: 2,
     },
     commentary_item_view_top_name: {
         color: GrayBlackColor,
@@ -357,8 +533,9 @@ const styles = StyleSheet.create({
     },
     commentary_item_view_top_right: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         paddingRight: 6,
+        flex: 1
     },
     commentary_item_view_top_right_img: {
         width: 16,
@@ -385,4 +562,4 @@ const styles = StyleSheet.create({
         paddingRight: 6,
         alignSelf: 'flex-end',
     }
-})
+};
