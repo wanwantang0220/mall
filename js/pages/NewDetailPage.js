@@ -43,7 +43,6 @@ export default class NewDetailPage extends PureComponent {
     async componentDidMount() {
 
         const id = this.props.navigation.state.params.data;
-        console.log('id : ', id);
         const datas = await httpUrl.getNewDL({
             id: id
         });
@@ -217,11 +216,13 @@ export default class NewDetailPage extends PureComponent {
      * 评论
      */
     getCommentaryItemView(item) {
+        const id = this.props.navigation.state.params.data;
+
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => {
-                    jumpPager(this.props.navigation.navigate,'CommentLong',null);
+                    jumpPager(this.props.navigation.navigate,'CommentLong',id);
                 }}
                 style={styles.commentary_item_view}>
                 <Image
@@ -264,7 +265,7 @@ export default class NewDetailPage extends PureComponent {
 }
 
 
-const styles = {
+const styles = StyleSheet.create({
     loading_view: {
         flex: 1,
         width: width,
@@ -562,4 +563,4 @@ const styles = {
         paddingRight: 6,
         alignSelf: 'flex-end',
     }
-};
+});

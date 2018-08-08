@@ -1,6 +1,7 @@
 function getTime(time) {
     // 比如需要这样的格式 yyyy-MM-dd hh:mm:ss
     let result;
+    time = time * 1000;
     let date = new Date(time);
     let Y = date.getFullYear() + '-';
     let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
@@ -17,7 +18,6 @@ function getTime(time) {
         m = ':' + m;
     }
     let s = ':' + date.getSeconds();
-    console.log(Y + M + D + h + m + s);
     result = Y + M + D + h + m;
     return result;
 }

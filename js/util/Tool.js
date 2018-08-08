@@ -140,6 +140,10 @@ function convertStarArray(score) {
     return arr
 }
 
+function checkNullObj (obj) {
+    return Object.keys(obj).length === 0
+}
+
 module.exports = {
     getCurrentTime: getCurrentTime,
     objLength: objLength,
@@ -151,5 +155,6 @@ module.exports = {
     div: div,
     mul: mul,
     accAdd: accAdd,
-    convertStarArray: convertStarArray
-}
+    convertStarArray: convertStarArray,
+    checkNullObj:checkNullObj
+};
