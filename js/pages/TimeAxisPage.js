@@ -100,27 +100,16 @@ export default class TimeAxisPage extends PureComponent {
             return (
                 <View style={styles.express_item} key={index}>
                     <View style={styles.express_right_first}>
-                        <View style={styles.process}>
+                        <View style={[styles.process, {width: width - 40}]}>
                             <Text style={{color: ColorStart, fontSize: 14, paddingLeft: 5}}>{item.title}</Text>
 
-                            <View style={{flexDirection: 'row', marginTop: 5, width: width}}>
+                            <View style={{flexDirection: 'row', marginTop: 5, justifyContent: 'space-between'}}>
                                 <Image
-                                    style={{
-                                        width: 80,
-                                        height: 40,
-                                        borderRadius: 5,
-                                        borderColor: MainColor,
-                                        borderBottomWidth: 1,
-                                        padding: 5,
-                                        flex: 1,
-                                    }}
-                                    source={{uri: item.images[0]}}
-                                />
-                                <Text style={[styles.process_text_view2, {
-                                    flex: 3,
-                                    justifyContent: 'flex-end'
-                                }]}>{item.display_date}</Text>
-
+                                    style={[styles.process_image_view]}
+                                    source={{uri: item.images[0]}}/>
+                                <Text style={[styles.process_text_view2, {}]}>
+                                    {item.display_date}
+                                </Text>
                             </View>
                         </View>
                     </View>
@@ -200,7 +189,16 @@ const styles = StyleSheet.create({
         color: ColorTextGrey2,
         fontSize: 12,
         paddingLeft: 10,
-        marginTop: 10
+        marginTop: 10,
+        marginRight:10
+    },
+    process_image_view: {
+        width: 80,
+        height: 40,
+        borderRadius: 5,
+        borderColor: MainColor,
+        borderBottomWidth: 1,
+        padding: 5,
     }
 
 });
