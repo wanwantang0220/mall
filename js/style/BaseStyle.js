@@ -245,6 +245,16 @@ export {
 
     BackgroundColorLight,
     ColorTextGrey,
+    ColorLineRed,
+    ColorLine,
+    ColorStart,
+    ColorEnd,
+    ThemeColor,
+    ColorRed,
+    ColorTextGrey2,
+    SeparatorColor,
+
+
 
     white_fff,
     black_000,

@@ -13,6 +13,7 @@ import NaviBarView from "../component/NaviBarView";
 import httpUrl from "../http/HttpUrl";
 import {width} from '../util/ScreenUtil';
 import mainStyles from "../style/Css";
+import {jumpPager} from "../util/Utils";
 
 
 export default class ThemesPage extends PureComponent {
@@ -28,6 +29,7 @@ export default class ThemesPage extends PureComponent {
             mThemeList: [],
             MainColor: MainColor,
             ToolColor: ToolColor,
+            isInitSuccess: true
         };
     }
 
@@ -36,8 +38,6 @@ export default class ThemesPage extends PureComponent {
         this.index = this.props.navigation.state.params.data.index;
         this.title = this.props.navigation.state.params.data.title;
         this.getList();
-
-
     }
 
     render() {
@@ -94,9 +94,9 @@ export default class ThemesPage extends PureComponent {
                         </View>
                     </View>
 
-                    <View>
+                    <ScrollView style={{marginBottom: 5}}>
                         {show_result}
-                    </View>
+                    </ScrollView>
 
                 </View>
 
@@ -144,12 +144,19 @@ export default class ThemesPage extends PureComponent {
 
 
     renderThemeItemView(item) {
+        const index = this.props.navigation.state.params.data.index;
+
         return (
-            <View style={[styles.theme_item_view]}>
+            <TouchableOpacity
+                onPress={() => {
+                    this.goTo(index, item.id);
+                }}
+                activeOpacity={0.8}
+                style={[styles.theme_item_view]}>
                 <View style={{flexDirection: 'row'}}>
                     <View style={{
                         flex: 1,
-                        padding:10
+                        padding: 10
                     }}>
                         <Image
                             style={{
@@ -163,14 +170,14 @@ export default class ThemesPage extends PureComponent {
                         />
                     </View>
 
-                    <View style={{flexDirection: 'column', flex: 5,padding:10}}>
+                    <View style={{flexDirection: 'column', flex: 5, padding: 10}}>
                         <Text>{item.name}</Text>
                         <Text>{item.description}</Text>
                     </View>
                 </View>
 
                 <View style={[mainStyles.line]}/>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -185,7 +192,12 @@ export default class ThemesPage extends PureComponent {
             let hotlist = await mlist.json();
             if (hotlist != null) {
                 this.setState({
-                    mHotList: hotlist.recent
+                    mHotList: hotlist.recent,
+                    isInitSuccess: true,
+                })
+            } else {
+                this.setState({
+                    isInitSuccess: false,
                 })
             }
         } else if (index === 1) {
@@ -195,9 +207,15 @@ export default class ThemesPage extends PureComponent {
             let latestlist = await mlist.json();
             if (latestlist != null) {
                 this.setState({
-                    mHotList: latestlist.stories
+                    mHotList: latestlist.stories,
+                    isInitSuccess: true,
+                })
+            } else {
+                this.setState({
+                    isInitSuccess: false,
                 })
             }
+
         } else if (index === 2) {
             mlist = await  httpUrl.getThemes({
                 query: {}
@@ -205,7 +223,12 @@ export default class ThemesPage extends PureComponent {
             let themeslist = await mlist.json();
             if (themeslist != null) {
                 this.setState({
-                    mThemeList: themeslist.others
+                    mThemeList: themeslist.others,
+                    isInitSuccess: true,
+                })
+            } else {
+                this.setState({
+                    isInitSuccess: false,
                 })
             }
         } else if (index === 3) {
@@ -215,12 +238,23 @@ export default class ThemesPage extends PureComponent {
             let sectionslist = await mlist.json();
             if (mlist != null) {
                 this.setState({
-                    mThemeList: sectionslist.data
+                    mThemeList: sectionslist.data,
+                    isInitSuccess: true,
+                })
+            } else {
+                this.setState({
+                    isInitSuccess: false,
                 })
             }
         }
         console.log('mHotList:', this.state.mHotList);
         console.log('mThemeList:', this.state.mThemeList);
+    }
+
+    goTo(index, id) {
+        if (index === 3) {
+            jumpPager(this.props.navigation.navigate, 'TimeAxis', id)
+        }
     }
 }
 

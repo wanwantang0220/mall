@@ -36,6 +36,9 @@ const getHot = (params) => httpRequest(params, HOST + '/news/hot');
 //栏目总览 URL: https://news-at.zhihu.com/api/3/sections
 const getSections = (params) => httpRequest(params, HOST + '/sections');
 
+//栏目总览 URL: https://news-at.zhihu.com/api/3/section/1
+const getSectionsAbout = (params) => httpRequest(params, HOST + '/section/' + params.id);
+
 //查看新闻的推荐者 URL: https://news-at.zhihu.com/api/4/story/#{id}/recommenders
 const getRecommenders = (params) => httpRequest(params, HOST + '/story/' + params.id + '/recommenders');
 
@@ -57,6 +60,7 @@ export default {
     getShortComments,
     getHot,
     getSections,
+    getSectionsAbout,
     getRecommenders,
     getSection
 }

@@ -13,6 +13,7 @@ import NewDetailPage from "./pages/NewDetailPage";
 import CommentLongPage from "./pages/CommentLongPage";
 import SearchPage from "./pages/SearchPage";
 import ThemesPage from "./pages/ThemesPage";
+import TimeAxisPage from "./pages/TimeAxisPage";
 
 const App = createStackNavigator({
     Tab: {
@@ -29,7 +30,11 @@ const App = createStackNavigator({
     },
     Themes: {
         screen: ThemesPage
+    },
+    TimeAxis: {
+        screen: TimeAxisPage
     }
+
 
 }, {
     tabBarPosition: "bottom"
