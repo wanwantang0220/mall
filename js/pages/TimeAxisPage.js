@@ -12,6 +12,8 @@ import LinearGradient from "react-native-linear-gradient";
 import NaviBarView from "../component/NaviBarView";
 import mainStyles from "../style/Css";
 import {width} from "../util/ScreenUtil";
+import {SharedElement} from "react-native-motion";
+import {jumpPager} from "../util/Utils";
 
 
 export default class TimeAxisPage extends PureComponent {
@@ -23,11 +25,11 @@ export default class TimeAxisPage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            mList: [],
+            mList: null,
             name: '',
             MainColor: MainColor,
             ToolColor: ToolColor,
-            isInitSuccess: true
+            isInitSuccess: true,
         };
     }
 
@@ -100,18 +102,26 @@ export default class TimeAxisPage extends PureComponent {
             return (
                 <View style={styles.express_item} key={index}>
                     <View style={styles.express_right_first}>
-                        <View style={[styles.process, {width: width - 40}]}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => {
+                                jumpPager(this.props.navigation.navigate, 'SharedInfo', item);
+                            }}
+                            style={[styles.process, {width: width - 40}]}>
                             <Text style={{color: ColorStart, fontSize: 14, paddingLeft: 5}}>{item.title}</Text>
 
-                            <View style={{flexDirection: 'row', marginTop: 5, justifyContent: 'space-between'}}>
-                                <Image
-                                    style={[styles.process_image_view]}
-                                    source={{uri: item.images[0]}}/>
-                                <Text style={[styles.process_text_view2, {}]}>
-                                    {item.display_date}
-                                </Text>
-                            </View>
-                        </View>
+                            {/*<SharedElement id="source">*/}
+                                <View style={{flexDirection: 'row', marginTop: 5, justifyContent: 'space-between'}}>
+                                    <Image
+                                        style={[styles.process_image_view]}
+                                        source={{uri: item.images[0]}}/>
+                                    <Text style={[styles.process_text_view2, {}]}>
+                                        {item.display_date}
+                                    </Text>
+                                </View>
+                            {/*</SharedElement>*/}
+
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.express_left, {backgroundColor: backgroundColor}]}/>
                 </View>
@@ -155,12 +165,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingLeft: 10,
+        paddingLeft: 20,
         width: width
     },
     express_right_first: {
         width: width,
-        paddingLeft: 30,
+        paddingLeft: 20,
         borderLeftWidth: 1,
         borderLeftColor: '#e0e0e0',
         flexDirection: 'column'
@@ -173,7 +183,7 @@ const styles = StyleSheet.create({
         borderColor: SeparatorColor,
         backgroundColor: '#e0e0e0',
         position: 'relative',
-        right: width + 10,
+        right: width + 14,
         top: 10,
         marginStart: 5,
     },
@@ -190,7 +200,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         paddingLeft: 10,
         marginTop: 10,
-        marginRight:10
+        marginRight: 10
     },
     process_image_view: {
         width: 80,

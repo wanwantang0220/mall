@@ -242,7 +242,6 @@ export {
     WhiteTextColor,
     BaseStyles,
     ToolColor,
-
     BackgroundColorLight,
     ColorTextGrey,
     ColorLineRed,
@@ -253,9 +252,6 @@ export {
     ColorRed,
     ColorTextGrey2,
     SeparatorColor,
-
-
-
     white_fff,
     black_000,
     gray_e9e9e9,

@@ -14,6 +14,7 @@ import CommentLongPage from "./pages/CommentLongPage";
 import SearchPage from "./pages/SearchPage";
 import ThemesPage from "./pages/ThemesPage";
 import TimeAxisPage from "./pages/TimeAxisPage";
+import SharedInfoPage from "./pages/SharedInfoPage";
 
 const App = createStackNavigator({
     Tab: {
@@ -33,6 +34,9 @@ const App = createStackNavigator({
     },
     TimeAxis: {
         screen: TimeAxisPage
+    },
+    SharedInfo: {
+        screen: SharedInfoPage
     }
 
 

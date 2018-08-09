@@ -12,5 +12,6 @@ export default {
     white: '#FFFFFF',
     titleBottonSolid: '#979797',
     activeBarText:'#ff6a3c',
+    ToolColor:''
 
 }
