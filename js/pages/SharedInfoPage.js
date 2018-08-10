@@ -58,6 +58,9 @@ export default class SharedInfoPage extends PureComponent {
                             <Text style={[styles.title_view,]}>
                                 {item.title}
                             </Text>
+                            <Text style={[styles.title_view,]}>
+                                {item.date}
+                            </Text>
                         </View>
                     {/*</SharedElement>*/}
                 </View>

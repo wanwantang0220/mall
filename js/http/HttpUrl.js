@@ -2,6 +2,8 @@ import {httpRequest} from "./HttpRequest";
 
 
 const HOST = 'https://news-at.zhihu.com/api/4';
+const HOST_GANK = 'http://gank.io/api';
+
 
 //最新消息
 const getLatest = (params) => httpRequest(params, HOST + '/news/latest');
@@ -46,6 +48,32 @@ const getRecommenders = (params) => httpRequest(params, HOST + '/story/' + param
 const getSection = (params) => httpRequest(params, HOST + '/section/' + params.id + '/before/' + params.timestamp);
 
 
+//获取最新一天的干货 http://gank.io/api/today
+const getGankToday = (params) => httpRequest(params, HOST_GANK + '/today');
+
+//获取闲读的主分类 http://gank.io/api/xiandu/categories
+//category 后面可接受参数为主分类返回的en_name,例如【apps， wow， android，iOS】
+const getGankCate = (params) => httpRequest(params, HOST_GANK + '/xiandu/categories');
+
+//获取闲读的子分类 http://gank.io/api/xiandu/category/wow
+const getGankCateNow = (params) => httpRequest(params, HOST_GANK + '/xiandu/category/wow');
+
+//获取闲读数据 http://gank.io/api/xiandu/data/id/appinn/count/10/page/1
+//id 后面可接受参数为子分类返回的idpage 第几页，从1开始  count 每页的个数
+const getGankAppinn = (params) => httpRequest(params, HOST_GANK + '/xiandu/data/id/appinn/count/' + params.pagecount + '/page/' + params.page);
+
+//获取某几日干货网站数据:http://gank.io/api/history/content/2/1   注： 2 代表 2 个数据，1 代表：取第一页数据
+const getGankContent = (params) => httpRequest(params, HOST_GANK + '/history/content/' + params.pagecount + '/' + params.page);
+
+
+//获取特定日期网站数据 http://gank.io/api/history/content/day/2016/05/11
+const getGankDayContent = (params) => httpRequest(params, HOST_GANK + '/history/content/day/' + params.year + '/' + params.month + '/' + params.day);
+
+// http://gank.io/api/data/数据类型/请求个数/第几页
+// 数据类型： 福利 | Android | iOS | 休息视频 | 拓展资源 | 前端 | all
+// https://gank.io/api/data/Android/10/1
+const getGankTypeContent = (params) => httpRequest(params, HOST_GANK + '/data/' + params.type + '/' + params.pagecount + '/' + params.page);
+
 //返回成功
 const RESULT_OK = "000000";
 
@@ -62,8 +90,16 @@ export default {
     getSections,
     getSectionsAbout,
     getRecommenders,
-    getSection
+    getSection,
+    getGankToday,
+    getGankCate,
+    getGankCateNow,
+    getGankAppinn,
+    getGankContent,
+    getGankDayContent,
+    getGankTypeContent
 }
+
 
 
 
