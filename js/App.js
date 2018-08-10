@@ -15,6 +15,7 @@ import SearchPage from "./pages/SearchPage";
 import ThemesPage from "./pages/ThemesPage";
 import TimeAxisPage from "./pages/TimeAxisPage";
 import SharedInfoPage from "./pages/SharedInfoPage";
+import ClassfyDetailPage from "./pages/ClassfyDetailPage";
 
 const App = createStackNavigator({
     Tab: {
@@ -37,8 +38,10 @@ const App = createStackNavigator({
     },
     SharedInfo: {
         screen: SharedInfoPage
+    },
+    ClassfyDetail: {
+        screen: ClassfyDetailPage
     }
-
 
 }, {
     tabBarPosition: "bottom"

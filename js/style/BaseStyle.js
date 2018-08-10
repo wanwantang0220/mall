@@ -226,7 +226,7 @@ const BaseStyles = StyleSheet.create({
 });
 
 const MainColor = '#ff6a3c';
-const ToolColor = '#000000';
+const ToolColor = '#ff6a3c';
 
 export {
     Base, App_Name, Cate_Data, Default_Photos, Movie_Types, Theme_Datas, MainColor,

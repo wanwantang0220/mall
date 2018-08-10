@@ -69,6 +69,38 @@ const mainStyles = StyleSheet.create({
     scrollview_container: {
         flex: 1,
     },
+    recommend_view: {
+        marginTop: 40,
+        padding: 16,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    recommend_view_item: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 20,
+        paddingTop: 16,
+    },
+    recommend_view_item_icon_view: {
+        padding: 4,
+        borderWidth: 2,
+        borderRadius: 30,
+        marginRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    recommend_view_item_icon: {
+        width: 26,
+        height: 26,
+    },
+    recommend_view_item_text: {
+        fontSize: 16,
+    },
+    lineargradient: {
+        width: width,
+        height: 20
+    }
 });
 
 export default mainStyles;

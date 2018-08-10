@@ -154,5 +154,11 @@ const Theme_Datas = [
     },
 ];
 
+const Genk_Cate_Types = [
+    'Android',
+    'iOS',
+    '前端'
+];
 
-export {Base, App_Name, Cate_Data, Default_Photos, Movie_Types, Theme_Datas}
+
+export {Base, App_Name, Cate_Data, Default_Photos, Movie_Types, Theme_Datas, Genk_Cate_Types}

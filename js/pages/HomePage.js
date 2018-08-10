@@ -104,7 +104,7 @@ export default class HomePage extends Component {
                             tintColor={White}/>
                     </TouchableOpacity>
                     <View style={styles.toolbar_middle}>
-                        <Text style={styles.toolbar_middle_text}>Mung</Text>
+                        <Text style={styles.toolbar_middle_text}>首页</Text>
                     </View>
                     <TouchableOpacity
                         onPress={() => {

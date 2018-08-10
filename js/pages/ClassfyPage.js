@@ -3,15 +3,14 @@
  **/
 
 import React, {Component} from 'react';
-import {Dimensions, Image, StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, StatusBar} from "react-native";
-import {BlackTextColor, MainColor, ToolColor, White, WhiteTextColor} from "../style/BaseStyle";
+import {ActivityIndicator, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ColorStart, MainColor, ToolColor, WhiteTextColor} from "../style/BaseStyle";
 import mainStyles from "../style/Css";
 import LinearGradient from "react-native-linear-gradient";
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import TestPage from "./TestPage";
 
 import httpUrl from "../http/HttpUrl";
 import NaviBarView from "../component/NaviBarView";
+import {jumpPager} from "../util/Utils";
 
 
 export default class ClassfyPage extends Component {
@@ -82,26 +81,39 @@ export default class ClassfyPage extends Component {
                         backgroundColor={ToolColor}
                         barStyle='light-content'/>
                     <NaviBarView backgroundColor={ToolColor}/>
-                    <View style={[mainStyles.container]}>
-                        <ScrollableTabView
-                            tabBarInactiveTextColor={BlackTextColor} // 没有被选中的文字颜色
-                            tabBarActiveTextColor={BlackTextColor}       // 选中的文字颜色
-                            tabBarBackgroundColor={White}     // 选项卡背景颜色
-                            tabBarUnderlineStyle={{backgroundColor: '#FF0000', height: 1}}   //下划线的样式
-                            initialPage={0}
-                            renderTabBar={() =>
-                                <ScrollableTabBar
-                                    style={{height: 40, borderWidth: 0, elevation: 2}}
-                                    tabStyle={{height: 39}}
-                                    underlineHeight={2}/>}>
-
-                            <TestPage tabLabel="收件"/>
-                            {/*<AddressSenderPage tabLabel="    发件    " navigator={navigator}/>*/}
-                        </ScrollableTabView>
+                    <View style={[mainStyles.toolbar, {backgroundColor: MainColor}]}>
+                        <View style={mainStyles.toolbar_middle}>
+                            <Text style={mainStyles.toolbar_middle_text}>Gank-接口 分类</Text>
+                        </View>
                     </View>
+
+                    {/*推荐栏*/}
+                    <View style={mainStyles.recommend_view}>
+                        {this.renderItemView()}
+                    </View>
+
                 </View>
             )
         }
+    }
+
+
+    renderItemView() {
+        const mTabs = this.state.mList;
+        return mTabs.map((item, i) => {
+            return (
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    key={i}
+                    onPress={() => {
+                        jumpPager(this.props.navigation.navigate, 'ClassfyDetail', null);
+                    }}>
+                    <View style={mainStyles.recommend_view_item}>
+                        <Text style={[mainStyles.recommend_view_item_text, {color: ColorStart}]}>{item}</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        });
     }
 
 
