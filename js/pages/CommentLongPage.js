@@ -1,16 +1,27 @@
 import React, {PureComponent} from 'react';
 import {
-    ActivityIndicator, Dimensions, FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity,
+    ActivityIndicator,
+    Dimensions,
+    FlatList,
+    Image,
+    ScrollView,
+    StatusBar,
+    Text,
+    TouchableOpacity,
     View
 } from "react-native";
-import {Default_Photos} from "../style/BaseContant";
 import {
     BackgroundColorLight,
-    BaseStyles, BlackTextColor, GrayBlackColor, GrayColor, MainBg, MainColor, ToolColor, White,
+    BaseStyles,
+    GrayBlackColor,
+    GrayColor,
+    MainBg,
+    MainColor,
+    ToolColor,
+    White,
     WhiteTextColor
 } from "../style/BaseStyle";
 import LinearGradient from "react-native-linear-gradient";
-import {jumpPager} from "../util/Utils";
 import NaviBarView from "../component/NaviBarView";
 import httpUrl from "../http/HttpUrl";
 import {getTime} from "../util/TimeUtil";

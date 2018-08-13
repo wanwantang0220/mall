@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {ActivityIndicator, Text, TouchableOpacity} from "react-native";
+import {ActivityIndicator, FlatList, Text, TouchableOpacity, View} from "react-native";
 
 
 import PropTypes from 'prop-types';
@@ -24,10 +24,10 @@ export default class CateroyListPage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            mAList: null,
-            mIList: null,
-            mHList: null,
+            mList: null,
             isInitSuccess: true,
+            pagecount: 10,
+            page: 1
         };
     }
 
@@ -38,7 +38,7 @@ export default class CateroyListPage extends PureComponent {
 
     render() {
 
-        if (this.state.mAList == null && this.state.mIList && this.state.mHList) {
+        if (this.state.mList == null) {
             return (
                 this.state.isInitSuccess ? (
                     <LinearGradient style={mainStyles.loading_view} colors={[MainColor, WhiteTextColor]}>
@@ -62,12 +62,28 @@ export default class CateroyListPage extends PureComponent {
             )
         } else {
             return (
-                <Text>CateroyListPage</Text>
+                <FlatList
+                    data={this.state.mList}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item}) => (this.renderHotItemView(item))}
+                    showsVerticalScrollIndicator={false}
+                />
             )
         }
 
     }
 
+
+    renderHotItemView(item) {
+        return (
+            <View style={{margin:10}}>
+
+                <Text style={{margin: 5}}>{item.desc}</Text>
+                <View style={[mainStyles.line, {}]}/>
+
+            </View>
+        )
+    }
 
     async getList() {
         const title = this.props.title;
@@ -79,8 +95,15 @@ export default class CateroyListPage extends PureComponent {
         });
 
         let clist = await list.json();
-
-        console.log('clist : ', clist.results);
+        if (clist != null) {
+            if (clist.results.length > 0) {
+                this.setState({
+                    mList: clist.results
+                })
+            }
+        }
 
     }
+
+
 }
