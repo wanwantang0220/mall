@@ -2,7 +2,7 @@
 demo mall
 
 已完成的部分：
-<img  src="https://github.com/wanwantang0220/mall/blob/master/images/1.jpg"/> 
+<img  src="https://github.com/wanwantang0220/mall/blob/master/images/1.jpg" width="200" height="400"/> 
 <img  src="https://github.com/wanwantang0220/mall/blob/master/images/2.jpg"/> <br />
 <img  src="https://github.com/wanwantang0220/mall/blob/master/images/3.jpg"/> 
 <img  src="https://github.com/wanwantang0220/mall/blob/master/images/4.jpg"/> <br />
