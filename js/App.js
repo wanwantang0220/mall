@@ -16,6 +16,7 @@ import ThemesPage from "./pages/ThemesPage";
 import TimeAxisPage from "./pages/TimeAxisPage";
 import SharedInfoPage from "./pages/SharedInfoPage";
 import ClassfyDetailPage from "./pages/ClassfyDetailPage";
+import LottiePage from "./pages/plug/LottiePage";
 
 const App = createStackNavigator({
     Tab: {
@@ -41,7 +42,11 @@ const App = createStackNavigator({
     },
     ClassfyDetail: {
         screen: ClassfyDetailPage
+    },
+    Lottie:{
+        screen:LottiePage
     }
+
 
 }, {
     tabBarPosition: "bottom"

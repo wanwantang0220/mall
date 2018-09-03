@@ -3,16 +3,17 @@
  **/
 
 import React, {Component} from 'react';
-import {Dimensions, Image, StyleSheet, View, Text} from "react-native";
+import {Dimensions, Image, StyleSheet, View, Text, TouchableOpacity} from "react-native";
 import color from "../style/ColorStyle";
+import {jumpPager} from "../util/Utils";
 
 
 export default class ChartPage extends Component {
 
     static navigationOptions = {
         //标题
-        title:'购物车',
-        drawerLabel: '购物车',
+        title:'插件',
+        drawerLabel: '插件',
         tabBarIcon: ({focused}) => {
             // 根据是否选中，显示不同图片
             const icon = focused
@@ -32,7 +33,14 @@ export default class ChartPage extends Component {
 
         return (
             <View>
-                <Text>ThirdPage</Text>
+                <TouchableOpacity
+                    onPress={()=>
+                        jumpPager(this.props.navigation.navigate, "Lottie", null)
+                    }>
+                    <View>
+                        <Text>插件-lottie</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
