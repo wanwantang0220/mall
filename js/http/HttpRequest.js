@@ -1,7 +1,5 @@
 import * as util from "../util/Tool";
 import * as md5 from "../util/MD5";
-import JsonUtil from "./JsonUtil";
-import {ErrorAnayle, NetWork_Request_Error} from "./ErrorAnayle";
 
 
 const API_SECRET_KEY = 'www.mall.cycle.com';

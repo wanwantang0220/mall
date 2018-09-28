@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
     "lottie-react-native": "^2.5.8",
     "prop-types": "^15.6.2",
     "react": "16.4.1",
